@@ -26,23 +26,6 @@ darwinn = "0.1"
 | Model format | zero-copy reader for the consumed subset of the DarwiNN FlatBuffer |
 | Tensor plumbing | out of scope: TFLite integration, allocation, post-processing |
 
-## The transport seam
-
-```rust
-pub trait Transport {
-    type Error: core::fmt::Debug;
-    fn control_in(&mut self, req_type: u8, request: u8, value: u16, index: u16, buf: &mut [u8], timeout_us: u32) -> Result<usize, Self::Error>;
-    fn control_out(&mut self, req_type: u8, request: u8, value: u16, index: u16, data: &[u8], timeout_us: u32) -> Result<(), Self::Error>;
-    fn bulk_out(&mut self, ep: u8, data: &[u8], timeout_us: u32) -> Result<(), Self::Error>;
-    fn bulk_in(&mut self, ep: u8, buf: &mut [u8], timeout_us: u32) -> Result<usize, Self::Error>;
-    fn interrupt_in(&mut self, ep: u8, buf: &mut [u8], timeout_us: u32) -> Result<Option<usize>, Self::Error>;
-}
-```
-
-That is the crate's whole dependency on the outside world, which is what makes
-it testable on a desktop. `interrupt_in` is part of the trait but is not on any
-path the driver needs; completion arrives on the bulk event endpoint.
-
 ## Usage
 
 ```rust
@@ -67,17 +50,6 @@ layer.relayout_into(&staging, &mut tensor)?;
 layer.transform_signed_data_type(&mut tensor);
 ```
 
-## Bounded waits
-
-Every register poll is bounded by `Timeouts::poll_attempts` and fails with
-`Error::PollTimeout` naming the register that stalled; every transfer carries an
-explicit microsecond timeout; the bulk reassembly loop rejects a zero-length
-read rather than spinning. No loop in this crate is bounded by anything other
-than a constant or the length of a caller-provided buffer.
-
-The crate is `#![forbid(unsafe_code)]`, and the FlatBuffer reader returns
-`Option` rather than panicking on a malformed model.
-
 ## Tests
 
 The host tests run against a mock transport that records every transfer and
@@ -101,7 +73,3 @@ cargo test -- --ignored --nocapture   # needs a coralmicro model checkout
 cargo clippy --all-targets -- -D warnings
 cargo build --target thumbv7em-none-eabihf
 ```
-
-## Licence
-
-See [LICENSE](LICENSE) and [NOTICE](NOTICE).
