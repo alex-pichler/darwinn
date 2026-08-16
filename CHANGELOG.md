@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-08-17
+
 Initial release: a `no_std`, transport-agnostic driver for the Google Edge TPU
 (DarwiNN) over USB, ported from the TPU half of Google's coralmicro SDK.
 
@@ -35,4 +37,5 @@ Initial release: a `no_std`, transport-agnostic driver for the Google Edge TPU
   signature and version checks, parameter-caching token bookkeeping, and
   `embedded-hal-async`.
 
-[Unreleased]: https://github.com/alex-pichler/darwinn/commits/main
+[Unreleased]: https://github.com/alex-pichler/darwinn/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/alex-pichler/darwinn/releases/tag/v0.1.0
