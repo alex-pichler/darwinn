@@ -1,0 +1,10 @@
+darwinn
+Copyright 2026 Alex Pichler
+
+This product includes software developed by Google LLC.
+
+Portions of this crate are derived from the Edge TPU driver in Google's
+coralmicro SDK (libs/tpu), Copyright 2022 Google LLC, licensed under the
+Apache License, Version 2.0.
+
+  https://github.com/google-coral/coralmicro

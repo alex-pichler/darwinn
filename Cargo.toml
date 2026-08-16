@@ -1,0 +1,21 @@
+[package]
+name = "darwinn"
+version = "0.1.0"
+edition = "2021"
+# `core::error::Error` (used by `Error`) was stabilised in 1.81; that is the
+# highest floor anything in this crate imposes.
+rust-version = "1.81"
+license = "Apache-2.0"
+description = "no_std driver for the Google Edge TPU (DarwiNN) over USB: DFU firmware download, CSR access, executable parsing and inference"
+keywords = ["edgetpu", "coral", "darwinn", "tpu", "no-std"]
+categories = ["embedded", "hardware-support", "no-std"]
+readme = "README.md"
+repository = "https://github.com/alex-pichler/darwinn"
+# Repository scaffolding, of no use to anyone depending on this crate.
+exclude = [".github", ".gitignore"]
+
+[dependencies]
+embedded-hal = "1.0"
+
+[lints.rust]
+missing_docs = "deny"
